@@ -21,7 +21,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App(mainViewModel: MainViewModel = viewModel()) {
     MaterialTheme {
         val greetings by mainViewModel.greetingList.collectAsStateWithLifecycle()
-
+        Platform().logSystemInfo()
         Column(
             modifier = Modifier
                 .padding(all = 10.dp)
