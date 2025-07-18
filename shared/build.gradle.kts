@@ -27,7 +27,7 @@ kotlin {
             isStatic = true
         }
     }
-    val ktorVersion = "3.2.1"
+    val supabaseVersion = "3.2.1"
     sourceSets {
         commonMain.dependencies {
             // put your Multiplatform dependencies here
@@ -38,6 +38,8 @@ kotlin {
             implementation(libs.runtime)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation(project.dependencies.platform("io.github.jan-tennert.supabase:bom:$supabaseVersion"))
+            implementation("io.github.jan-tennert.supabase:postgrest-kt")
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
