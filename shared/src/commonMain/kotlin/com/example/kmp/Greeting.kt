@@ -19,9 +19,10 @@ class Greeting {
         emit(rocketComponent.launchPhrase())
     }
 
-    fun getProducts(): Flow<Product> = flow {
+    fun getProducts(): Flow<List<Product>> = flow {
         try {
             val products = supabase.from("products").select().decodeList<Product>()
+            emit(products);
             println("Fetched products: $products")
         } catch (e: Exception) {
             println("Error fetching products: ${e.message}")
