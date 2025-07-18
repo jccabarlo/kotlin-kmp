@@ -16,6 +16,11 @@ class MainViewModel : ViewModel() {
             Greeting().greet().collect { phrase ->
                 _greetingList.update { list -> list + phrase }
             }
+
+            Greeting().getProducts().collect { products ->
+
+            }
+
         }
     }
 }
