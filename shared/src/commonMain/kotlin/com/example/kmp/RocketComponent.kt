@@ -6,10 +6,11 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.get
 import io.ktor.serialization.kotlinx.json.*
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.json.Json
+import kotlin.time.ExperimentalTime
 
 class RocketComponent {
     private val httpClient = HttpClient {
@@ -22,6 +23,7 @@ class RocketComponent {
         }
     }
 
+    @OptIn(ExperimentalTime::class)
     private suspend fun getDateOfLastSuccessfulLaunch(): String {
         val rockets: List<RocketLaunch> =
             httpClient.get("https://api.spacexdata.com/v4/launches").body()
