@@ -1,5 +1,6 @@
 package com.example.kmp
 
+import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,4 +18,14 @@ class Greeting {
         emit(daysPhrase())
         emit(rocketComponent.launchPhrase())
     }
+
+    fun getProducts(): Flow<Product> = flow {
+        try {
+            val products = supabase.from("products").select().decodeList<Product>()
+            println("Fetched products: $products")
+        } catch (e: Exception) {
+            println("Error fetching products: ${e.message}")
+        }
+    }
+
 }
