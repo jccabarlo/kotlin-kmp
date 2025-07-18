@@ -10,6 +10,8 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
     private val _greetingList = MutableStateFlow<List<String>>(listOf())
     val greetingList: StateFlow<List<String>>get() = _greetingList
+    private val _productList = MutableStateFlow<List<Product>>(listOf())
+    val productList: StateFlow<List<Product>>get() = _productList
 
     init {
         viewModelScope.launch {
@@ -18,7 +20,7 @@ class MainViewModel : ViewModel() {
             }
 
             Greeting().getProducts().collect { products ->
-
+                _productList.update {  products }
             }
 
         }
