@@ -13,7 +13,6 @@ class Greeting {
     fun greet(): Flow<String> = flow {
         emit(if (Random.nextBoolean()) "Hi!" else "Hello!")
         delay(1.seconds)
-//        emit("Guess what this is! > ${platform.osName}")
         delay(1.seconds)
         emit(daysPhrase())
         emit(rocketComponent.launchPhrase())
