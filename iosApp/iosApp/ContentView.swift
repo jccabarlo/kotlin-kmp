@@ -13,6 +13,8 @@ struct ContentView: View {
                     Text(greeting)
                 }
 
+                DeviceInfoView()
+
                 Text("Products:")
                     .font(.headline)
                     .padding(.top)
