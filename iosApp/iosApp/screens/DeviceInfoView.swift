@@ -2,6 +2,9 @@ import SwiftUI
 import Shared
 
 struct DeviceInfoView: View {
+    @Environment(\.dismiss)
+    private var dismiss
+    
     private struct RowItem: Hashable {
         let title: String
         let subtitle: String
@@ -29,17 +32,30 @@ struct DeviceInfoView: View {
     }()
 
     var body: some View {
-        List {
-            ForEach(items, id: \.self) { item in
-                VStack(alignment: .leading) {
-                    Text(item.title)
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                    Text(item.subtitle)
-                        .font(.body)
-                        .foregroundStyle(.primary)
+        NavigationStack {
+            List {
+                ForEach(items, id: \.self) { item in
+                    VStack(alignment: .leading) {
+                        Text(item.title)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                        Text(item.subtitle)
+                            .font(.body)
+                            .foregroundStyle(.primary)
+                    }
+                    .padding(.vertical, 4)
                 }
-                .padding(.vertical, 4)
+            }
+            .navigationTitle("Device Info")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Done")
+                            .bold()
+                    }
+                }
             }
         }
     }
