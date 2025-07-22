@@ -2,47 +2,72 @@ import SwiftUI
 import Shared
 
 struct ContentView: View {
-    @ObservedObject private(set) var viewModel: ViewModel
-
+    
+    @State private var shouldOpenAbout = false
+    
     var body: some View {
-        NavigationView { // Optional: For a title and navigation
-            VStack {
-                Text("Greetings:")
-                    .font(.headline)
-                List(viewModel.greetings, id: \.self) { greeting in
-                    Text(greeting)
-                }
-
-                DeviceInfoView()
-
-                Text("Products:")
-                    .font(.headline)
-                    .padding(.top)
-
-                if viewModel.isLoadingProducts {
-                    ProgressView()
-                } else if viewModel.products.isEmpty {
-                    Text("No products found.")
-                } else {
-                    List(viewModel.products, id: \.id) { product in
-                        // Assuming Product has an 'id'
-                        VStack(alignment: .leading) {
-                            Text(product.name) // Assuming Product has a 'name'
-                                .font(.title3)
-                            // Add other product details here
-                            // Text("Price: \(product.price)")
+        NavigationStack{
+            ArticlesView(viewModel: .init())
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                            shouldOpenAbout = true
+                        } label: {
+                            Label("About", systemImage: "info.circle").labelStyle(.titleAndIcon)
+                        }
+                        .popover(isPresented: $shouldOpenAbout) {
+//                            AboutScreen()
+                            DeviceInfoView()
                         }
                     }
                 }
-            }
-            .navigationTitle("KMP App")
-            .task { // Use .task for view lifecycle-tied async operations
-                await viewModel.startObserving()
-            }
         }
     }
-
 }
+
+//struct ContentView: View {
+//    @ObservedObject private(set) var viewModel: ViewModel
+//
+//    var body: some View {
+//        NavigationView { // Optional: For a title and navigation
+//            VStack {
+//                Text("Greetings:")
+//                    .font(.headline)
+//                List(viewModel.greetings, id: \.self) { greeting in
+//                    Text(greeting)
+//                }
+//
+//                DeviceInfoView()
+//                ArticlesView(viewModel: .init())
+//
+//                Text("Products:")
+//                    .font(.headline)
+//                    .padding(.top)
+//
+//                if viewModel.isLoadingProducts {
+//                    ProgressView()
+//                } else if viewModel.products.isEmpty {
+//                    Text("No products found.")
+//                } else {
+//                    List(viewModel.products, id: \.id) { product in
+//                        // Assuming Product has an 'id'
+//                        VStack(alignment: .leading) {
+//                            Text(product.name) // Assuming Product has a 'name'
+//                                .font(.title3)
+//                            // Add other product details here
+//                            // Text("Price: \(product.price)")
+//                        }
+//                    }
+//                }
+//            }
+//            .navigationTitle("KMP App")
+//            .task { // Use .task for view lifecycle-tied async operations
+//                await viewModel.startObserving()
+//            }
+//        }
+//    }
+//
+//}
 
 extension ContentView {
     @MainActor
@@ -105,8 +130,8 @@ struct ListView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(viewModel: ContentView.ViewModel())
-    }
-}
+// struct ContentView_Previews: PreviewProvider {
+//     static var previews: some View {
+//         ContentView(viewModel: ContentView.ViewModel())
+//     }
+// }
