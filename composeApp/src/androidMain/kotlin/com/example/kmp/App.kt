@@ -11,7 +11,7 @@ import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -21,18 +21,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kmp.articles.ArticlesViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App(mainViewModel: MainViewModel = viewModel()) {
     MaterialTheme {
-        Scaffold(topBar = { ToolBar() }) { paddingValues ->
-            Content(
-                mainViewModel, paddingValues
-            )
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            AppScaffold(articlesViewModel = ArticlesViewModel())
         }
-
     }
 }
 
